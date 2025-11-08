@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -136,7 +137,20 @@ public class FASTAReader {
 	 */
 	private boolean compareImproved(byte[] pattern, int position) throws FASTAException {
 		// TODO
-		return false;
+		
+		
+		if (position + pattern.length > validBytes) {
+			throw new FASTAException("Pattern goes beyond the end of the file.");
+		}
+		
+		for (int i = 0; i < pattern.length; i++) { // patern, un codifo pequeño
+			if (pattern[i] != content[position + i]) { 
+				return false;      // si el valor de pattern es distinto al de la pos +i devuelve  falso
+				
+			}
+		}
+		
+		return true;
 	}
 
 	/*
@@ -148,9 +162,18 @@ public class FASTAReader {
 	 * ones present in the indicated position.
 	 */
 	private int compareNumErrors(byte[] pattern, int position) throws FASTAException {
-		// TODO
-		return -1;
+		if (position + pattern.length > validBytes) {
+			throw new FASTAException("Pattern goes beyond the end of the file.");
+		}
+		int contador=0;
+		for (int i = 0; i < pattern.length; i++) { // patern, un codifo pequeño
+			if (pattern[i] != content[position + i]) { // si el valor de pattern es distinto al de la pos +i; match falso
+				 contador++;
+			}
+		}
+		return contador;
 	}
+	
 
 	/**
 	 * Implements a linear search to look for the provided pattern in the data
@@ -162,9 +185,25 @@ public class FASTAReader {
 	 *         pattern in the data.
 	 */
 	public List<Integer> search(byte[] pattern) {
+		
+		
+		List<Integer>inicialPositions=new ArrayList<Integer>(); //creamos nuevo array de integer
+		
+		for(int i=0; i<validBytes;i++) { //recorremos hasta el num de valid bytes
+			try {
+				if(compareImproved(pattern,i)) //comparamos el pattern de la posicion i
+					inicialPositions.add(i); // si es true lo añadimos
+				}catch(FASTAException e) {
+					break;
+					
+				}
+			}
+		return inicialPositions;
+		
 		// TODO
-		return null;
+	
 	}
+
 
 	/**
 	 * Implements a linear search to look for the provided pattern in the data array
