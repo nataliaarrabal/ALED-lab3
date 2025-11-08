@@ -76,7 +76,7 @@ public class FASTAReader {
 	 * 
 	 * @return The data array with each nucleotid taking one byte.
 	 */
-	public byte[] getContent() {
+	public byte[] getContent() { // devuelve el valor del array con todos los nucleotidos
 		return content;
 	}
 
@@ -102,10 +102,10 @@ public class FASTAReader {
 	 * @param size       The length of the sequence.
 	 * @return An String representing the sequence.
 	 */
-	public String getSequence(int initialPos, int size) {
+	public String getSequence(int initialPos, int size) {// devuelve un pedazo del codigo genetico
 		if (initialPos + size >= validBytes)
-			return null;
-		return new String(content, initialPos, size);
+			return null; // si se pasa de largo
+		return new String(content, initialPos, size); // crea un nuevo string con el pedazo especifico
 	}
 
 	/*
@@ -122,9 +122,9 @@ public class FASTAReader {
 			throw new FASTAException("Pattern goes beyond the end of the file.");
 		}
 		boolean match = true;
-		for (int i = 0; i < pattern.length; i++) {
-			if (pattern[i] != content[position + i]) {
-				match = false;
+		for (int i = 0; i < pattern.length; i++) { // patern, un codifo pequeño
+			if (pattern[i] != content[position + i]) { // si el valor de pattern es distinto al de la pos +i; match falso
+				match = false; // position es el valor inical respecto de content
 			}
 		}
 		return match;
