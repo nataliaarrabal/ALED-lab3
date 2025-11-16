@@ -38,6 +38,7 @@ public class FASTAReaderSuffixes extends FASTAReader {
 			suffixes[i] = new Suffix(i);
 		// Sorts the data
 		sort();
+		//rellena suffixes y lo ordena
 	}
 
 	/*

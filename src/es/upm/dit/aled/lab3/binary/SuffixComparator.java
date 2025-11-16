@@ -49,4 +49,4 @@ public class SuffixComparator implements Comparator<Suffix> {
 		// first (lexicographically).
 		return index2 - index1;
 	}
-}
+}                         

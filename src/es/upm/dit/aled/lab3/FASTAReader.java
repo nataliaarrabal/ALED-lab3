@@ -185,7 +185,7 @@ public class FASTAReader {
 	 *         pattern in the data.
 	 */
 	public List<Integer> search(byte[] pattern) {
-		
+		//TODO
 		
 		List<Integer>inicialPositions=new ArrayList<Integer>(); //creamos nuevo array de integer
 		
@@ -200,7 +200,7 @@ public class FASTAReader {
 			}
 		return inicialPositions;
 		
-		// TODO
+		
 	
 	}
 
@@ -219,7 +219,18 @@ public class FASTAReader {
 	 */
 	public List<Integer> searchSNV(byte[] pattern) {
 		// TODO
-		return null;
+		List<Integer> pos = new ArrayList<Integer>();
+		for (int i = 0; i < validBytes; i++) {
+			try {
+				if (compareNumErrors(pattern, i) <= 1)
+					pos.add(i);
+			} catch (FASTAException e) {
+				
+				break;
+			}
+		}
+		return pos;
+		
 	}
 
 	public static void main(String[] args) {
