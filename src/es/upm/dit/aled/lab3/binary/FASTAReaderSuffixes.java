@@ -112,8 +112,45 @@ public class FASTAReaderSuffixes extends FASTAReader {
 			if(pattern[index]> content[posSuffix +index])
 				hi=m++;
 				index=0;
-			
 				
+		//MIRAR ESTO MEJOR, NO LO TERMINO DE ENTENDER BIEN!!!!!		
+				
+				if (found) {
+					// Now we also check the previous indexes, in case there are more matches
+					int indexSubstract = 1;
+					while (true) {
+						posSuffix = suffixes[posInSuffix - indexSubstract].suffixIndex;
+						boolean isAlsoMatch = true;
+						for (int s = 0; s < pattern.length; s++) {
+							if (pattern[s] != content[posSuffix + s]) {
+								isAlsoMatch = false;
+								break;
+							}
+						}
+						if (isAlsoMatch) {
+							pos.add(posSuffix);
+							indexSubstract++;
+						} else
+							break;
+					}
+					// Now we also check the next indexes, in case there are more matches
+					int indexAdd = 1;
+					while (true) {
+						posSuffix = suffixes[posInSuffix + indexAdd].suffixIndex;
+						boolean isAlsoMatch = true;
+						for (int s = 0; s < pattern.length; s++) {
+							if (pattern[s] != content[posSuffix + s]) {
+								isAlsoMatch = false;
+								break;
+							}
+						}
+						if (isAlsoMatch) {
+							pos.add(posSuffix);
+							indexAdd++;
+						} else
+							break;
+					}
+				}
 		}
 		
 		return pos;
