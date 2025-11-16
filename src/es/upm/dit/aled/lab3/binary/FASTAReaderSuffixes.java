@@ -1,5 +1,6 @@
 package es.upm.dit.aled.lab3.binary;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,7 +81,42 @@ public class FASTAReaderSuffixes extends FASTAReader {
 	@Override
 	public List<Integer> search(byte[] pattern) {
 		// TODO
-		return null;
+		
+		List <Integer>pos=new ArrayList<Integer>();
+		
+		int lo=0;
+		int hi=suffixes.length;
+		int index=0;
+		
+		int m;
+		int posSuffix; 
+
+		boolean found = false;
+		int posInSuffix = 0;
+
+		while(!found && (hi-lo)>1) {
+			m=(hi+lo)/2;
+			posSuffix=suffixes[m].suffixIndex; //coge el indice del sufijo de esa posicion
+			
+			if(pattern[index]==content[posSuffix+index])
+				index++;
+			if(index==pattern.length &&(pattern[index - 1] == content[posSuffix + index - 1]))
+				found=true;
+				pos.add(posSuffix);
+				posInSuffix=m;
+				
+			if(pattern[index]<content[posSuffix+index])
+				hi=m--;
+				index=0;
+			
+			if(pattern[index]> content[posSuffix +index])
+				hi=m++;
+				index=0;
+			
+				
+		}
+		
+		return pos;
 	}
 
 	public static void main(String[] args) {
